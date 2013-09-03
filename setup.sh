@@ -99,7 +99,4 @@ cp $RESOURCES/jboss-as.conf /etc/jboss-as/
 cp $RESOURCES/jboss-as-standalone.sh /etc/init.d/jboss-standalone
 update-rc.d jboss-standalone defaults
 
-#### start! (non-failure is a sanity test)
-/etc/init.d/jboss-standalone start
-
 exit 0
