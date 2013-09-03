@@ -18,10 +18,12 @@ if [ -e "$RESOURCES/immutant.local.conf" ]; then
 fi
 
 #### Java
-echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+apt-get -y update
+apt-get -y install python-software-properties # gives us add-apt-repository
 add-apt-repository -y ppa:webupd8team/java
 apt-get -y update
-apt-get -y install oracle-java7-installer unzip
+echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+apt-get -y install oracle-java7-installer unzip curl vim
 
 #### Leiningen
 # mkdir ~/bin
