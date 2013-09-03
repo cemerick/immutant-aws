@@ -1,1 +1,4 @@
 immutant.local.conf
+.vagrant
+*.clj
+*.ima
