@@ -35,7 +35,8 @@ apt-get -y install oracle-java7-installer unzip
 
 #### Immutant
 sudo useradd -m immutant
-mkdir -p $IMMUTANT_DIR
+JBOSS_LOG_DIR=/var/log/jboss-as
+mkdir -p $IMMUTANT_DIR $JBOSS_LOG_DIR
 
 # echo '{:user {:plugins [[lein-immutant "1.0.1"]]}}' > ~/.lein/profiles.clj
 # lein immutant install 1.0.1
@@ -44,7 +45,7 @@ wget http://downloads.immutant.org/release/org/immutant/immutant-dist/$IMMUTANT_
 unzip immutant-dist-$IMMUTANT_DIST.zip
 mv immutant-$IMMUTANT_DIST/jboss/* $IMMUTANT_DIR
 
-chown immutant:immutant -R $IMMUTANT_DIR
+chown immutant:immutant -R $IMMUTANT_DIR $JBOSS_LOG_DIR 
 
 ##### swap in AWS-enabled config
 STANDALONE_CONF=$IMMUTANT_DIR/standalone/configuration/standalone-ha.xml

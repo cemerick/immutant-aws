@@ -48,6 +48,11 @@ if [ -z "$JBOSS_CONSOLE_LOG" ]; then
   JBOSS_CONSOLE_LOG=/var/log/jboss-as/console.log
 fi
 
+if [ -z "$JBOSS_LOG_DIR" ]; then
+    JBOSS_LOG_DIR=/var/log/jboss-as/
+fi
+export JBOSS_LOG_DIR="$JBOSS_LOG_DIR"
+
 if [ -z "$STARTUP_WAIT" ]; then
   STARTUP_WAIT=30
 fi
@@ -97,9 +102,9 @@ start() {
 
   if [ ! -z "$JBOSS_USER" ]; then
     if [ -r /etc/rc.d/init.d/functions ]; then
-      daemon --user $JBOSS_USER LAUNCH_JBOSS_IN_BACKGROUND=1 JBOSS_PIDFILE=$JBOSS_PIDFILE $JBOSS_SCRIPT -c $JBOSS_CONFIG 2>&1 > $JBOSS_CONSOLE_LOG &
+      daemon --user $JBOSS_USER LAUNCH_JBOSS_IN_BACKGROUND=1 JBOSS_PIDFILE=$JBOSS_PIDFILE $JBOSS_SCRIPT -Djboss.server.log.dir=$JBOSS_LOG_DIR -c $JBOSS_CONFIG 2>&1 > $JBOSS_CONSOLE_LOG &
     else
-      su - $JBOSS_USER -c "LAUNCH_JBOSS_IN_BACKGROUND=1 JBOSS_PIDFILE=$JBOSS_PIDFILE $JBOSS_SCRIPT -c $JBOSS_CONFIG" 2>&1 > $JBOSS_CONSOLE_LOG &
+      su - $JBOSS_USER -c "LAUNCH_JBOSS_IN_BACKGROUND=1 JBOSS_PIDFILE=$JBOSS_PIDFILE $JBOSS_SCRIPT -Djboss.server.log.dir=$JBOSS_LOG_DIR -c $JBOSS_CONFIG" 2>&1 > $JBOSS_CONSOLE_LOG &
     fi
   fi
 
