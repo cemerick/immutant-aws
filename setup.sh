@@ -28,7 +28,7 @@ echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /u
 apt-get -y install oracle-java7-installer unzip curl vim
 
 ##### unlimited-strength crypto
-cp $RESOURCES/UnlimitedJCEPolicy/*.jar $JAVA_HOME/jre/lib/security/
+cp $RESOURCES/UnlimitedJCEPolicy/*.jar /usr/lib/jvm/java-7-oracle/jre/lib/security/
 
 #### Leiningen
 # mkdir ~/bin
