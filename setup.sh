@@ -27,6 +27,9 @@ apt-get -y update
 echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 apt-get -y install oracle-java7-installer unzip curl vim
 
+##### unlimited-strength crypto
+cp $RESOURCES/UnlimitedJCEPolicy/*.jar $JAVA_HOME/jre/lib/security/
+
 #### Leiningen
 # mkdir ~/bin
 # curl https://raw.github.com/technomancy/leiningen/stable/bin/lein -o ~/bin/lein
