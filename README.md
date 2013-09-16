@@ -6,6 +6,13 @@ Seriously, don't use this (yet?). I'm a hack.
 
 ## S3_PING
 
+If at all possible, your application should be running on nodes that have
+assigned IAM roles, [so you can avoid shipping credentials everywhere](http://docs.aws.amazon.com/AWSSdkDocsJava/latest/DeveloperGuide/java-dg-roles.html).  Unfortunately, S3_PING doesn't support this method, so you need to provide credentials for it at a minimum.
+
+Given that, do what you can to limit the privileges associated with those
+credentials.  This is the tightest IAM user policy you can use with S3_PING
+AFAICT:
+
 ```json
 {
   "Version": "2012-10-17",
@@ -16,6 +23,7 @@ Seriously, don't use this (yet?). I'm a hack.
       ],
       "Sid": "AllowUserFullAccessToS3_PINGBucket",
       "Resource": [
+        "arn:aws:s3:::$BUCKET_NAME_HERE",
         "arn:aws:s3:::$BUCKET_NAME_HERE/*"
       ],
       "Effect": "Allow"
@@ -30,12 +38,18 @@ Seriously, don't use this (yet?). I'm a hack.
 }
 ```
 
+Replace `$BUCKET_NAME_HERE` with the name of the S3 bucket you want JGroups to
+use.
+
 ## TODOs
 
+* Automate generation/use of pre-signed URLs with S3_PING
 * Investigate [jgroups-aws](https://github.com/meltmedia/jgroups-aws) instead of
-  S3_PING. Presumably it is more efficient? Does it really matter (since S3
-  latency [either on requests or replication of new state] is only important
-  when cluster changes are afoot)?
+  S3_PING. It should be:
+    * More efficient?
+    * More importantly, it's more secure: can use EC2 node IAM roles, which
+      would make it possible to eliminate all AWS credentials from residing on
+      an immutant AMI
 
 ## Credits
 
