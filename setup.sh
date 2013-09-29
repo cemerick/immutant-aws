@@ -60,8 +60,8 @@ if [ ! -f "$STANDALONE_CONF.orig" ]; then
     mv $STANDALONE_CONF $STANDALONE_CONF.orig
 fi
 cp $RESOURCES/standalone-ha-ec2-template.xml $STANDALONE_CONF
-if [ -z "$AWS_PING_TAGS" -o -z "$AWS_PING_FILTERS" ]; then
-    echo "WARNING, one of \$AWS_PING_TAGS or \$AWS_PING_FILTERS, clustering will fail on AWS."
+if [ -z "$AWS_PING_TAGS" -a -z "$AWS_PING_FILTERS" ]; then
+    echo "WARNING, one of \$AWS_PING_TAGS or \$AWS_PING_FILTERS must be set, clustering will fail on AWS."
     exit 1
 fi
 for var in PUBLIC_NETWORK_IF AWS_PING_TAGS AWS_PING_FILTERS; do
