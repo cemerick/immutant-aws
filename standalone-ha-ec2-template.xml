@@ -184,11 +184,11 @@
             </stack>
             <stack name="tcp">
                 <transport type="TCP" socket-binding="jgroups-tcp"/>
-                <protocol type="S3_PING">
-                  <property name="secret_access_key">$S3_PING_SECRET_KEY</property>
-                  <property name="access_key">$S3_PING_ACCESS_KEY</property>
-                  <property name="location">$S3_PING_BUCKET</property>
-                </protocol>
+                <com.meltmedia.jgroups.aws.AWS_PING
+                  timeout="3000"
+                  port_number="7800"
+                  tags="$AWS_PING_TAGS"
+                  filters="$AWS_PING_FILTERS"/>
                 <!--<protocol type="MPING" socket-binding="jgroups-mping"/>-->
                 <protocol type="MERGE2"/>
                 <protocol type="FD_SOCK" socket-binding="jgroups-tcp-fd"/>

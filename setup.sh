@@ -60,19 +60,11 @@ if [ ! -f "$STANDALONE_CONF.orig" ]; then
     mv $STANDALONE_CONF $STANDALONE_CONF.orig
 fi
 cp $RESOURCES/standalone-ha-ec2-template.xml $STANDALONE_CONF
-if [ -z "$S3_PING_BUCKET" ]; then
-    echo "WARNING, $S3_PING_BUCKET not defined, clustering will fail on AWS."
+if [ -z "$AWS_PING_TAGS" -o -z "$AWS_PING_FILTERS" ]; then
+    echo "WARNING, one of \$AWS_PING_TAGS or \$AWS_PING_FILTERS, clustering will fail on AWS."
     exit 1
 fi
-if [ -z "$S3_PING_SECRET_KEY" ]; then
-    echo "WARNING, $S3_PING_SECRET_KEY not defined, clustering will fail on AWS."
-    exit 1
-fi
-if [ -z "$S3_PING_ACCESS_KEY" ]; then
-    echo "WARNING, $S3_PING_ACCESS_KEY not defined, clustering will fail on AWS."
-    exit 1
-fi
-for var in PUBLIC_NETWORK_IF S3_PING_SECRET_KEY S3_PING_ACCESS_KEY S3_PING_BUCKET; do
+for var in PUBLIC_NETWORK_IF AWS_PING_TAGS AWS_PING_FILTERS; do
     _val=$(eval "echo \$$var")
     _val=${_val//\//\\/}
     sed -i s/\$$var/$_val/g $STANDALONE_CONF
