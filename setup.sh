@@ -78,28 +78,6 @@ for var in PUBLIC_NETWORK_IF S3_PING_SECRET_KEY S3_PING_ACCESS_KEY S3_PING_BUCKE
     sed -i s/\$$var/$_val/g $STANDALONE_CONF
 done
 
-#### bootstrap deployment
-# this is just getting silly...
-# $IMMUTANT_INIT_DEPLOY=$IMMUTANT_DIR/immutant-initial-deploy.sh
-# cat > $IMMUTANT_INIT_DEPLOY <<DEPLOY_EOF
-# #!/usr/bin/env bash
-# 
-# IMMUTANT_DEPLOY=$IMMUTANT_DIR/standalone/deployments
-# if [ -z "$INIT_IMA" ]; then
-#     echo "Deploying initial application from $INIT_IMA"
-#     pushd $IMMUTANT_DEPLOY
-#     INIT_IMA_PATH=$IMMUTANT_DEPLOY/INIT_IMA.ima
-#     curl "$INIT_IMA" -o $INIT_IMA_PATH
-# 
-#     cat > $INIT_IMA_PATH.clj <<EOF
-# {:root "$INIT_IMA_PATH" :lein-profiles [:production]} 
-# EOF
-#     touch $INIT_IMA_PATH.clj.dodeploy
-#     popd
-# fi
-# DEPLOY_EOF
-# chmod +x $IMMUTANT_INIT_DEPLOY
-
 #### daemonizing
 mkdir -p /etc/jboss-as
 cp $RESOURCES/jboss-as.conf /etc/jboss-as/
